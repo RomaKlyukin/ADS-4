@@ -1,14 +1,14 @@
 // Copyright 2021 NNTU-CS
 int countPairs1(int *arr, int len, int value) {
-  int sc = 0;
+  int s = 0;
   for (int i = 0; i < len; i++) {
     for (int j = i + 1; j < len; j++) {
       if (arr[i] + arr[j] == value) {
-        sc++;
+        s++;
       }
     }
   }
-  return sc;
+  return s;
 }
 int countPairs2(int *arr, int len, int value) {
   int sc = 0;
