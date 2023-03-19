@@ -12,16 +12,10 @@ int countPairs1(int *arr, int len, int value) {
 }
 int countPairs2(int *arr, int len, int value) {
   int sc = 0;
-  int min = 0, max = len - 1;
-  while (min != max) {
-    if (arr[min] + arr[max] == value) {
-      sc++;
-      max--;
-    } else {
-      if (arr[min] + arr[max] > value) {
-        max--;
-      } else {
-        min++;
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = len - 1; j > i; j--) {
+      if (arr[i] + arr[j] == value) {
+        sc++;
       }
     }
   }
@@ -29,29 +23,32 @@ int countPairs2(int *arr, int len, int value) {
 }
 int countPairs3(int *arr, int len, int value) {
   int mid;
-  int left = 0;
-  int right = len - 1;
   int sc;
   int k = 0;
-  while (left < right) {
-    mid = left + (right - left) / 2;
-    while (true) {
-      sc = 1;
-      if (arr[mid] + arr[mid + sc] >= value) {
-        while (arr[mid] + arr[mid + sc] == value) {
+  for (int i = 0; i < len; i++) {
+    int left = i;
+    int right = len;
+    while (left < right-1) {
+      mid = (left + right) / 2;
+      if (arr[i] + arr[mid] == value) {
+        k++;
+        sc = 1;
+        while (arr[mid] == arr[mid + sc] && (mid + sc) < right) {
+          k++;
+          sc++; 
+        }
+        sc = 1;
+        while (arr[mid] == arr[mid - sc] && (mid - sc) > left) {
           k++;
           sc++;
         }
-        right = mid;
         break;
       }
-      if (arr[mid] + arr[mid - sc] <= value) {
-        while (arr[mid] + arr[mid - sc] == value) {
-          k++;
-          sc--;
-          left = mid;
-        }
-        break;
+      if (arr[i] + arr[mid] > value) {
+        right = mid;
+      }
+      if (arr[i] + arr[mid] < value) {
+        left = mid;
       }
     }
   }
